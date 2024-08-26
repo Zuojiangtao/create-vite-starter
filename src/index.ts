@@ -1,11 +1,16 @@
 #!/usr/bin/env node
 
 import start from './core/start';
+import setting from './core/setting';
 
 async function initViteStarterCommand() {
   // start
   const lang = await start();
   console.log(lang);
+
+  // setting
+  const options = await setting();
+  console.log(options);
 }
 
 initViteStarterCommand().then(() => {
