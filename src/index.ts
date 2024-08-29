@@ -2,6 +2,7 @@
 
 import start from './core/start';
 import setting from './core/setting';
+import create from './core/create';
 
 async function initViteStarterCommand() {
   // start
@@ -10,7 +11,9 @@ async function initViteStarterCommand() {
 
   // setting
   const options = await setting();
-  console.log(options);
+
+  // create
+  await create(options);
 }
 
 initViteStarterCommand().then(() => {
