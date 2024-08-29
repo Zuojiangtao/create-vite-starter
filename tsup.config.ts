@@ -5,7 +5,7 @@ export default defineConfig({
     'src/index.ts',
   ],
   format: ['cjs'],
-  dts: true,
   clean: true,
   shims: true,
+  minify: true,
 })
