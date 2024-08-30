@@ -15,6 +15,7 @@ export default async function create(options: Options) {
     useEslint: needsEslint,
     usePrettier: needsPrettier,
     useVitest: needsVitest,
+    useHusky: needsHusky,
   } = options;
 
   const name = projectName ?? 'vite-app';
@@ -28,16 +29,29 @@ export default async function create(options: Options) {
   }
 
   // ================= copy template =================
-  // base
+  // ========= base =========
   await copyTemplate(path.resolve(__dirname, '../template/base'), root);
-  // framework
-  // todo: 完整框架模板逻辑
+  // ========= config =========
+  // eslint
+  if (needsEslint) {
+    await copyTemplate(path.resolve(__dirname, '../template/config/eslint'), root);
+  }
+  // prettier
+  if (needsPrettier) {
+    await copyTemplate(path.resolve(__dirname, '../template/config/prettier'), root);
+  }
+  // husky
+  if (needsHusky) {
+    await copyTemplate(path.resolve(__dirname, '../template/config/husky'), root);
+  }
+  // ========= framework =========
+  // todo: 完整框架模板逻辑补充 - vue3\react\nuxt\next\koa\
   // vue2
   await copyTemplate(path.resolve(__dirname, '../template/vue2'), root);
 
   // ================= ejs render =================
-  // base
-  // framework
+  // ========= base =========
+  // ========= framework =========
   // vue2
   await ejsRender(path.resolve(__dirname, '../template/vue2'), root);
 }

@@ -10,4 +10,5 @@ interface Options {
   useEslint?: boolean
   usePrettier?: boolean
   useVitest?: boolean
+  useHusky?: boolean
 }

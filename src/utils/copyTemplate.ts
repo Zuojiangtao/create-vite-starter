@@ -13,8 +13,10 @@ import { deepMerge, sortDependencies } from './utils';
  * */
 export async function copyTemplate(src: string, dest: string, callback: void): Promise<void> {
   const fileName = path.basename(src);
+  const extName = path.extname(src);
 
   if (fs.statSync(src).isDirectory()) {
+    // ================= skip node_modules file =================
     if (fileName === 'node_modules') return;
     fs.mkdirSync(dest, { recursive: true });
     for (const file of fs.readdirSync(src)) {
@@ -24,8 +26,7 @@ export async function copyTemplate(src: string, dest: string, callback: void): P
   }
 
   // ================= skip ejs file =================
-  const extName = path.extname(dest).replace(/[.]/g, '');
-  if (extName.endsWith('.ejs')) return;
+  if (extName === '.ejs') return;
 
   // ================= json file copy =================
   const jsonWriteFile = dest => {

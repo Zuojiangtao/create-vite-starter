@@ -99,7 +99,7 @@ export default async function setOption() {
       choices: FRAMEWORKS.map(framework => {
         return {
           title: framework.display,
-          value: framework,
+          value: framework.display,
         };
       }),
     },
@@ -167,6 +167,14 @@ export default async function setOption() {
         return 'toggle';
       },
       message: 'language.usePrettier.message',
+      initial: false,
+      active: 'on',
+      inactive: 'off',
+    },
+    {
+      name: 'useHusky',
+      type: () => (isFeatureFlagsUsed ? null : 'toggle'),
+      message: 'language.useHusky.message',
       initial: false,
       active: 'on',
       inactive: 'off',
