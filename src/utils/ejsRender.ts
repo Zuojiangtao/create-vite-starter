@@ -12,10 +12,11 @@ import prettier from 'prettier';
  * */
 export async function ejsRender(src: string, dest: string): Promise<void> {
   const fileName = path.basename(src);
+  const extName = path.extname(src).replace(/[.]/g, '');
 
   if (fs.statSync(src).isDirectory()) {
     if (fileName === 'node_modules') return;
-    !fs.statSync(dest).isDirectory() && fs.mkdirSync(dest, { recursive: true });
+    // !fs.statSync(dest).isDirectory() && fs.mkdirSync(dest, { recursive: true });
     for (const file of fs.readdirSync(src)) {
       await ejsRender(path.resolve(src, file), path.resolve(dest, file));
     }
@@ -23,35 +24,25 @@ export async function ejsRender(src: string, dest: string): Promise<void> {
   }
 
   // ================= skip not ejs file =================
-  const extName = path.extname(dest).replace(/[.]/g, '');
-  if (!extName.endsWith('.ejs')) return;
+  if (extName !== 'ejs') return;
 
   try {
     let prettierCode = null;
-    // 获取当前渲染文件的 各种 参数
-    const file = path.parse(src);
-    console.log(file);
     // 需要转换的ejs文件
-    const ejsFilePath = path.resolve(dest, file.dir, `${file.name}.ejs`);
+    const ejsFilePath = path.resolve(src);
     // 转换后的文件
-    const outputFilePath = path.resolve(dest, src);
+    const outputFilePath = path.resolve(dest.split('.ejs')[0]);
     // buffer code
-    const templateBufferCode = await fs.readFileSync(outputFilePath);
+    const templateBufferCode = await fs.readFileSync(ejsFilePath);
     // ejs render code
     const code = ejs.render(templateBufferCode.toString());
     // 获取后缀
-    const extName = path.extname(src).replace(/[.]/g, '');
+    const _extname = path.extname(dest.split('.ejs')[0]).replace(/[.]/g, '');
     // outputPath
     const opts = await prettier.resolveConfig(src);
-    // // prettierCode
-    // const prettierFormatOptions = {
-    //   parser: 'babel',
-    //   ...outputPath,
-    // } || { parser: extName }
-    // const prettierCode = await prettier.format(code, prettierFormatOptions)
 
     try {
-      switch (extName) {
+      switch (_extname) {
         case 'ts':
           prettierCode = await prettier.format(code, {
             parser: 'babel',
@@ -80,7 +71,7 @@ export async function ejsRender(src: string, dest: string): Promise<void> {
           prettierCode = code;
           break;
         default:
-          prettierCode = await prettier.format(code, { parser: extName });
+          prettierCode = await prettier.format(code, { parser: _extname });
           break;
       }
     } catch (err) {
@@ -89,7 +80,7 @@ export async function ejsRender(src: string, dest: string): Promise<void> {
 
     // 文件写入
     fs.writeFileSync(outputFilePath, prettierCode);
-    fs.unlinkSync(ejsFilePath);
+    // fs.unlinkSync(ejsFilePath);
   } catch (e) {
     console.error(e);
   }
