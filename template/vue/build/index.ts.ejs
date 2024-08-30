@@ -1,24 +1,46 @@
 import type { PluginOption } from 'vite';
 import { isProd, isReport } from './utils';
-
+<% if (options.usePluginSvgLoader) { -%>
 import { configLoaderSvg } from './loader/svgComponent';
-
+<% } -%>
+<% if (options.usePluginHtml) { -%>
 import { configPluginHTML } from './plugin/html';
+<% } -%>
+<% if (options.usePluginAutoImport) { -%>
 import { configPluginAutoImport } from './plugin/autoImport';
+<% } -%>
+<% if (options.usePluginVueComponents) { -%>
 import { configPluginComponents } from './plugin/components';
+<% } -%>
+<% if (options.usePluginExternalCDN) { -%>
 import { configPluginCDNImport } from './plugin/cdnImport';
+<% } -%>
+<% if (options.usePluginCompression) { -%>
 import { configPluginCompression } from './plugin/compression';
+<% } -%>
+<% if (options.usePluginImageOptimizer) { -%>
 import { configPluginImageOptimizer } from './plugin/imageOptimize';
+<% } -%>
+<% if (options.usePluginVisualizer) { -%>
 import { configPluginVisualizer } from './plugin/visualizer';
+<% } -%>
 
 export function vitePluginConfig(viteEnv: ViteEnv) {
   const {
-    VITE_USE_CDN,
-    VITE_GLOB_APP_TITLE,
     VITE_APP_NODE_ENV,
+    <% if (options.usePluginExternalCDN) { -%>
+    VITE_USE_CDN,
+    <% } -%>
+    <% if (options.usePluginHtml) { -%>
+    VITE_GLOB_APP_TITLE,
+    <% } -%>
+    <% if (options.usePluginCompression) { -%>
     VITE_BUILD_COMPRESS,
     VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE,
+    <% } -%>
+    <% if (options.usePluginImageOptimizer) { -%>
     VITE_USE_IMAGEMIN,
+    <% } -%>
   } = viteEnv;
 
   const isProdMode = isProd(VITE_APP_NODE_ENV ?? '');
@@ -26,30 +48,46 @@ export function vitePluginConfig(viteEnv: ViteEnv) {
 
   const vitePlugins: (PluginOption | PluginOption[])[] = [];
 
+  <% if (options.usePluginSvgLoader) { -%>
   // vite-svg-loader
   vitePlugins.push(configLoaderSvg());
+  <% } -%>
 
+  <% if (options.usePluginHtml) { -%>
   // vite-plugin-html
   vitePlugins.push(configPluginHTML(VITE_GLOB_APP_TITLE ?? ''));
+  <% } -%>
 
+  <% if (options.usePluginAutoImport) { -%>
   // unplugin-auto-import
   vitePlugins.push(configPluginAutoImport());
+  <% } -%>
 
+  <% if (options.usePluginVueComponents) { -%>
   // unplugin-vue-components
   vitePlugins.push(configPluginComponents());
+  <% } -%>
 
+  <% if (options.usePluginExternalCDN) { -%>
   // vite-plugin-cdn-import
   isProdMode && VITE_USE_CDN && vitePlugins.push(configPluginCDNImport());
+  <% } -%>
 
+  <% if (options.usePluginCompression) { -%>
   // vite-plugin-compression
   isProdMode &&
     vitePlugins.push(configPluginCompression(VITE_BUILD_COMPRESS ?? 'gzip', VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE));
+  <% } -%>
 
+  <% if (options.usePluginImageOptimizer) { -%>
   // vite-plugin-image-optimizer
   isProdMode && VITE_USE_IMAGEMIN && vitePlugins.push(configPluginImageOptimizer());
+  <% } -%>
 
+  <% if (options.usePluginVisualizer) { -%>
   // rollup-plugin-visualizer
   isReportMode && vitePlugins.push(configPluginVisualizer());
+  <% } -%>
 
   return vitePlugins;
 }

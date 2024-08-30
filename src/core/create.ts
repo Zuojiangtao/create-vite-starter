@@ -51,7 +51,7 @@ export default async function create(options: Options) {
 
   // ================= ejs render =================
   // ========= base =========
-  await ejsRender(path.resolve(__dirname, '../template/base'), root);
+  await ejsRender(path.resolve(__dirname, '../template/base'), root, options);
   // ========= framework =========
-  await ejsRender(path.resolve(__dirname, `../template/${framework}`), root);
+  await ejsRender(path.resolve(__dirname, `../template/${framework}`), root, options);
 }

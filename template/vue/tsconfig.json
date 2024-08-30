@@ -9,7 +9,7 @@
     "types/**/*.ts",
     "build/**/*.ts",
     "mock/**/*.ts",
-    "vite.config"
+    "vite.config.ts"
   ],
   "exclude": ["node_modules", "dist", "**/*.js"],
   "compilerOptions": {

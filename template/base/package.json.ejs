@@ -1,16 +1,121 @@
 {
-  "private": true,
-  "type": "module",
+  "name": "<%= options.projectName %>",
+  "version": "1.0.0",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "build": "run-p type-check build-only",
+    "preview": "vite preview --port 4173",
+    "build-only": "vite build",
+    <% if (options.usePluginVisualizer) { -%>
+    "report": "cross-env REPORT=true npm run build",
+    <% } -%>
+    "type-check": "vue-tsc --noEmit",
+    "clean:cache": "rimraf node_modules/.cache/ && rimraf node_modules/.vite",
+    "clean:lib": "rimraf node_modules",
+    <% if (options.useEslint) { -%>
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
+    <% } -%>
+    <% if (options.useHusky) { -%>
+    "prepare": "husky install",
+    "lint-staged": "lint-staged"
+    <% } -%>
   },
+  <% if (options.useHusky) { -%>
+  "lint-staged": {
+    "src/**/*.{ts,js,json,tsx,jsx,vue}": [
+      "prettier --write",
+      "eslint --cache --fix",
+      "eslint"
+    ]
+  },
+  <% } -%>
   "dependencies": {
-    "vue": "^3.4.38"
+    "@ant-design/icons-vue": "^7.0.1",
+    <% if (options.usePluginVueUseCore) { -%>
+    "@vueuse/core": "^10.9.0",
+    <% } -%>
+    "ant-design-vue": "4.1.2",
+    "axios": "^1.6.8",
+    <% if (options.usePinia) { -%>
+    "pinia": "^2.1.7",
+    <% } -%>
+    "vue": "3.4.21",
+    <% if (options.usePluginExternalCDN) { -%>
+    "vue-demi": "^0.14.7",
+    <% } -%>
+    <% if (options.useRouter) { -%>
+    "vue-router": "4.3.0"
+    <% } -%>
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^5.1.2",
-    "vite": "^5.4.2"
+    <% if (options.useHusky) { -%>
+    "@commitlint/cli": "^19.2.1",
+    <% } -%>
+    <% if (options.useHusky) { -%>
+    "@commitlint/config-conventional": "^19.1.0",
+    <% } -%>
+    <% if (options.useEslint) { -%>
+    "@rushstack/eslint-patch": "^1.8.0",
+    <% } -%>
+    "@types/node": "^20.11.30",
+    "@vitejs/plugin-vue": "^4.6.2",
+    <% if (options.useJsx) { -%>
+    "@vitejs/plugin-vue-jsx": "^3.1.0",
+    <% } -%>
+    "@vue/eslint-config-prettier": "^9.0.0",
+    "@vue/eslint-config-typescript": "^13.0.0",
+    "@vue/tsconfig": "^0.5.1",
+    <% if (options.usePluginVisualizer) { -%>
+    "cross-env": "^7.0.3",
+    <% } -%>
+    <% if (options.useEslint) { -%>
+    "eslint": "^8.57.0",
+    <% } -%>
+    <% if (options.useEslint && options.framework === 'vue') { -%>
+    "eslint-plugin-vue": "^9.23.0",
+    <% } -%>
+    <% if (options.useHusky) { -%>
+    "husky": "^9.0.11",
+    <% } -%>
+    "less": "^4.2.0",
+    <% if (options.useHusky) { -%>
+    "lint-staged": "^15.2.0",
+    <% } -%>
+    "npm-run-all": "^4.1.5",
+    <% if (options.usePrettier) { -%>
+    "prettier": "^3.2.5",
+    <% } -%>
+    "rimraf": "^5.0.5",
+    <% if (options.usePluginVisualizer) { -%>
+    "rollup-plugin-visualizer": "^5.12.0",
+    <% } -%>
+    <% if (options.usePluginSvgLoader) { -%>
+    "sharp": "^0.33.1",
+    "svgo": "^3.2.0",
+    <% } -%>
+    "typescript": "^5.4.3",
+    <% if (options.usePluginAutoImport) { -%>
+    "unplugin-auto-import": "^0.17.5",
+    <% } -%>
+    <% if (options.usePluginVueComponents) { -%>
+    "unplugin-vue-components": "^0.26.0",
+    <% } -%>
+    "vite": "^4.5.2",
+    <% if (options.usePluginCompression) { -%>
+    "vite-plugin-compression": "^0.5.1",
+    <% } -%>
+    <% if (options.usePluginExternalCDN) { -%>
+    "vite-plugin-external-cdn": "^1.0.1",
+    <% } -%>
+    <% if (options.usePluginHtml) { -%>
+    "vite-plugin-html": "^3.2.2",
+    <% } -%>
+    <% if (options.usePluginImageOptimizer) { -%>
+    "vite-plugin-image-optimizer": "^1.1.8",
+    <% } -%>
+    <% if (options.usePluginSvgLoader) { -%>
+    "vite-svg-loader": "^5.1.0",
+    <% } -%>
+    "vue-tsc": "^2.0.7"
   }
 }

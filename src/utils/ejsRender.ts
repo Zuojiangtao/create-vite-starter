@@ -8,9 +8,10 @@ import prettier from 'prettier';
  *
  * @param {string} src - source file path
  * @param {string} dest - destination filename of the ejs render operation
+ * @param {Options} options - render options
  * @returns {Promise}
  * */
-export async function ejsRender(src: string, dest: string): Promise<void> {
+export async function ejsRender(src: string, dest: string, options: Options): Promise<void> {
   const fileName = path.basename(src);
   const extName = path.extname(src).replace(/[.]/g, '');
 
@@ -18,7 +19,7 @@ export async function ejsRender(src: string, dest: string): Promise<void> {
     if (fileName === 'node_modules') return;
     // !fs.statSync(dest).isDirectory() && fs.mkdirSync(dest, { recursive: true });
     for (const file of fs.readdirSync(src)) {
-      await ejsRender(path.resolve(src, file), path.resolve(dest, file));
+      await ejsRender(path.resolve(src, file), path.resolve(dest, file), options);
     }
     return;
   }
@@ -35,7 +36,7 @@ export async function ejsRender(src: string, dest: string): Promise<void> {
     // buffer code
     const templateBufferCode = await fs.readFileSync(ejsFilePath);
     // ejs render code
-    const code = ejs.render(templateBufferCode.toString());
+    const code = ejs.render(templateBufferCode.toString(), { options });
     // 获取后缀
     const _extname = path.extname(dest.split('.ejs')[0]).replace(/[.]/g, '');
     // outputPath
@@ -45,7 +46,7 @@ export async function ejsRender(src: string, dest: string): Promise<void> {
       switch (_extname) {
         case 'ts':
           prettierCode = await prettier.format(code, {
-            parser: 'babel',
+            parser: 'typescript',
             ...opts,
           });
           break;

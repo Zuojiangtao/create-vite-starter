@@ -1,5 +1,6 @@
 import { parseArgs } from 'node:util';
 import prompts from 'prompts';
+import { FRAMEWORKS, PLUGIN_DEPENDENCE } from '@/config/compile.config';
 
 // const result: Options = {
 //   plugins: [],
@@ -27,21 +28,6 @@ const { values: argv, positionals } = parseArgs({
 });
 
 let targetDir = positionals[0];
-
-const FRAMEWORKS = [
-  {
-    name: 'vue',
-    display: 'Vue',
-  },
-  {
-    name: 'react',
-    display: 'React',
-  },
-  {
-    name: 'preact',
-    display: 'Preact',
-  },
-];
 
 function isValidPackageName(projectName) {
   return /^(?:@[a-z0-9-*~][a-z0-9-*._~]*\/)?[a-z0-9-~][a-z0-9-._~]*$/.test(projectName);
@@ -75,7 +61,7 @@ const isFeatureFlagsUsed =
   ) === 'boolean';
 
 export default async function setOption() {
-  return await prompts([
+  const result = await prompts([
     {
       type: 'text',
       name: 'projectName',
@@ -110,14 +96,14 @@ export default async function setOption() {
       initial: () => toValidPackageName(targetDir),
       validate: dir => isValidPackageName(dir) || 'packageName?',
     },
-    {
-      name: 'useTypeScript',
-      type: () => (isFeatureFlagsUsed ? null : 'toggle'),
-      message: 'language.useTypeScript.message',
-      initial: false,
-      active: 'on',
-      inactive: 'off',
-    },
+    // {
+    //   name: 'useTypeScript',
+    //   type: () => (isFeatureFlagsUsed ? null : 'toggle'),
+    //   message: 'language.useTypeScript.message',
+    //   initial: false,
+    //   active: 'on',
+    //   inactive: 'off',
+    // },
     {
       name: 'useJsx',
       type: () => (isFeatureFlagsUsed ? null : 'toggle'),
@@ -138,14 +124,6 @@ export default async function setOption() {
       name: 'usePinia',
       type: () => (isFeatureFlagsUsed ? null : 'toggle'),
       message: 'language.usePinia.message',
-      initial: false,
-      active: 'on',
-      inactive: 'off',
-    },
-    {
-      name: 'useVitest',
-      type: () => (isFeatureFlagsUsed ? null : 'toggle'),
-      message: 'language.useVitest.message',
       initial: false,
       active: 'on',
       inactive: 'off',
@@ -179,5 +157,31 @@ export default async function setOption() {
       active: 'on',
       inactive: 'off',
     },
+    {
+      name: 'useVitest',
+      type: () => (isFeatureFlagsUsed ? null : 'toggle'),
+      message: 'language.useVitest.message',
+      initial: false,
+      active: 'on',
+      inactive: 'off',
+    },
+    {
+      name: 'plugins',
+      type: 'multiselect',
+      message: 'Custom plugins',
+      choices: PLUGIN_DEPENDENCE.map(item => {
+        return {
+          title: item.label,
+          value: item.value,
+        };
+      }),
+      instructions: false,
+    },
   ]);
+
+  // format options plugins
+  result.plugins.length && result.plugins.forEach(plugin => (result[plugin] = true));
+  delete result.plugins;
+
+  return result;
 }
