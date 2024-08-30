@@ -8,6 +8,7 @@ export default async function create(options: Options) {
   const {
     projectName,
     overwrite: shouldOverwrite,
+    framework,
     useTypeScript: needsTypeScript,
     useJsx: needsJsx,
     useRouter: needsRouter,
@@ -45,13 +46,12 @@ export default async function create(options: Options) {
     await copyTemplate(path.resolve(__dirname, '../template/config/husky'), root);
   }
   // ========= framework =========
-  // todo: 完整框架模板逻辑补充 - vue3\react\nuxt\next\koa\
-  // vue2
-  await copyTemplate(path.resolve(__dirname, '../template/vue2'), root);
+  // todo: 完整框架模板逻辑补充 - react\nuxt\next\koa
+  await copyTemplate(path.resolve(__dirname, `../template/${framework}`), root);
 
   // ================= ejs render =================
   // ========= base =========
+  await ejsRender(path.resolve(__dirname, '../template/base'), root);
   // ========= framework =========
-  // vue2
-  await ejsRender(path.resolve(__dirname, '../template/vue2'), root);
+  await ejsRender(path.resolve(__dirname, `../template/${framework}`), root);
 }
