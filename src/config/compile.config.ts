@@ -2,6 +2,9 @@
  * Compile parameter enum constants / 编译参数枚举常量
  * */
 
+// default projectName
+export const DEFAULT_PROJECT_NAME = 'vite-starter';
+
 // framework
 export const FRAMEWORKS: object[] = [
   {

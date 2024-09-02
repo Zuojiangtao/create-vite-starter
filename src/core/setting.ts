@@ -1,82 +1,39 @@
-import { parseArgs } from 'node:util';
+import path from 'node:path';
+import fs from 'node:fs';
 import prompts from 'prompts';
-import { FRAMEWORKS, PLUGIN_DEPENDENCE } from '@/config/compile.config';
+import { DEFAULT_PROJECT_NAME, FRAMEWORKS, PLUGIN_DEPENDENCE } from '@/config/compile.config';
 
-// const result: Options = {
-//   plugins: [],
-//   cssPre: '',
-// }
-
-const args = process.argv.slice(2);
-
-// alias is not supported by parseArgs
-const options = {
-  typescript: { type: 'boolean' },
-  ts: { type: 'boolean' },
-  'with-tests': { type: 'boolean' },
-  tests: { type: 'boolean' },
-  'vue-router': { type: 'boolean' },
-  router: { type: 'boolean' },
-  'vue-devtools': { type: 'boolean' },
-  devtools: { type: 'boolean' },
-} as const;
-
-const { values: argv, positionals } = parseArgs({
-  args,
-  options,
-  strict: false,
-});
-
-let targetDir = positionals[0];
-
-function isValidPackageName(projectName) {
-  return /^(?:@[a-z0-9-*~][a-z0-9-*._~]*\/)?[a-z0-9-~][a-z0-9-._~]*$/.test(projectName);
-}
-
-function toValidPackageName(projectName) {
-  return projectName
-    .trim()
-    .toLowerCase()
-    .replace(/\s+/g, '-')
-    .replace(/^[._]/, '')
-    .replace(/[^a-z0-9-~]+/g, '-');
-}
-
-// if any of the feature flags is set, we would skip the feature prompts
-const isFeatureFlagsUsed =
-  typeof (
-    argv.default ??
-    (argv.ts || argv.typescript) ??
-    argv.jsx ??
-    (argv.router || argv['vue-router']) ??
-    argv.pinia ??
-    (argv.tests || argv['with-tests']) ??
-    argv.vitest ??
-    argv.cypress ??
-    argv.nightwatch ??
-    argv.playwright ??
-    argv.eslint ??
-    argv['eslint-with-prettier'] ??
-    (argv.devtools || argv['vue-devtools'])
-  ) === 'boolean';
+const isFeatureFlagsUsed = false;
 
 export default async function setOption() {
   const result = await prompts([
     {
       type: 'text',
       name: 'projectName',
-      message: 'project name',
-      initial: 'vite-starter',
-      onState: state => {
-        // console.log(state)
-        targetDir = state.value;
-      },
+      message: 'Project name:',
+      initial: DEFAULT_PROJECT_NAME,
     },
     {
-      type: 'confirm',
+      type: prev => {
+        try {
+          const stats = fs.statSync(path.resolve(process.cwd(), prev));
+          if (stats.isDirectory()) {
+            return 'confirm';
+          } else {
+            return null;
+          }
+        } catch (e) {
+          if (e.code === 'ENOENT') {
+            return null;
+          } else {
+            // 处理其他错误
+            console.error(`发生其它错误: ${err.message}`);
+          }
+        }
+      },
       name: 'overwrite',
-      message: `Target directory "${targetDir}" is not empty. Remove existing files and continue?`,
-      initial: true,
+      message: prev => `Target directory "${prev}" is not empty. Remove existing files and continue?`,
+      initial: false,
     },
     {
       type: 'select',
@@ -88,13 +45,6 @@ export default async function setOption() {
           value: framework.display,
         };
       }),
-    },
-    {
-      name: 'packageName',
-      type: () => (isValidPackageName(targetDir) ? null : 'text'),
-      message: 'packageName?',
-      initial: () => toValidPackageName(targetDir),
-      validate: dir => isValidPackageName(dir) || 'packageName?',
     },
     // {
     //   name: 'useTypeScript',
