@@ -27,7 +27,7 @@ export default async function setOption() {
             return null;
           } else {
             // 处理其他错误
-            console.error(`发生其它错误: ${err.message}`);
+            console.error(`发生其它错误: ${e.message}`);
           }
         }
       },
@@ -130,7 +130,7 @@ export default async function setOption() {
   ]);
 
   // format options plugins
-  result.plugins.length && result.plugins.forEach(plugin => (result[plugin] = true));
+  if (result.plugins.length) result.plugins.forEach(plugin => (result[plugin] = true));
   delete result.plugins;
 
   return result;
