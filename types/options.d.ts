@@ -10,7 +10,6 @@ interface Options {
   useEslint?: boolean
   usePrettier?: boolean
   useHusky?: boolean
-  useVitest?: boolean
   // plugins
   usePluginVueUseCore?: boolean
   usePluginVisualizer?: boolean

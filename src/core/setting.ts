@@ -108,14 +108,6 @@ export default async function setOption() {
       inactive: 'off',
     },
     {
-      name: 'useVitest',
-      type: () => (isFeatureFlagsUsed ? null : 'toggle'),
-      message: 'language.useVitest.message',
-      initial: false,
-      active: 'on',
-      inactive: 'off',
-    },
-    {
       name: 'plugins',
       type: 'multiselect',
       message: 'Custom plugins',
