@@ -49,32 +49,4 @@ module.exports = {
       },
     ],
   },
-  ignores: [
-    '*.json',
-    '*.html',
-    '*rc.js',
-    '*.svg',
-    '*.woff',
-    '*.ttf',
-    '*.css',
-    '*.sh',
-    '*.md',
-    '.vscode',
-    '.idea',
-    'package.json',
-    // Dependency directories
-    'node_modules/',
-    // local env files
-    '.env.local',
-    '.env.*.local',
-    // other
-    '.husky',
-    '/bin',
-    '/deploy',
-    '/dist',
-    '/docs',
-    '/public',
-    '/src/assets',
-    '/src/mock',
-  ],
 };
