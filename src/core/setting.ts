@@ -5,7 +5,7 @@ import { DEFAULT_PROJECT_NAME, FRAMEWORKS, PLUGIN_DEPENDENCE } from '@/config/co
 
 const isFeatureFlagsUsed = false;
 
-export default async function setOption() {
+export default async function setOption(): Promise<Options> {
   const result = await prompts([
     {
       type: 'text',
