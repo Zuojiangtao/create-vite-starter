@@ -2,6 +2,18 @@
  * Compile parameter enum constants / 编译参数枚举常量
  * */
 
+// lang
+export const LANGUAGE = [
+  {
+    label: 'EN',
+    value: 'en',
+  },
+  {
+    label: '中文',
+    value: 'zh-cn',
+  },
+];
+
 // default projectName
 export const DEFAULT_PROJECT_NAME = 'vite-starter';
 

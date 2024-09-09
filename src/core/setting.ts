@@ -2,15 +2,18 @@ import path from 'node:path';
 import fs from 'node:fs';
 import prompts from 'prompts';
 import { DEFAULT_PROJECT_NAME, FRAMEWORKS, PLUGIN_DEPENDENCE } from '@/config/compile.config';
+import { getLanguage } from '@/utils/getLanguage';
 
 const isFeatureFlagsUsed = false;
 
-export default async function setOption(): Promise<Options> {
+export default async function setOption(lang: prompts.Answers<any>): Promise<Options> {
+  const language = getLanguage(lang.language);
+
   const result = await prompts([
     {
       type: 'text',
       name: 'projectName',
-      message: 'Project name:',
+      message: language.projectName.message,
       initial: DEFAULT_PROJECT_NAME,
     },
     {
@@ -32,13 +35,13 @@ export default async function setOption(): Promise<Options> {
         }
       },
       name: 'overwrite',
-      message: prev => `Target directory "${prev}" is not empty. Remove existing files and continue?`,
+      message: prev => `${language.shouldOverwrite.dirForPrompts.target} "${prev}" ${language.shouldOverwrite.message}`,
       initial: false,
     },
     {
       type: 'select',
       name: 'framework',
-      message: 'Select a framework:',
+      message: language.framework.message,
       choices: FRAMEWORKS.map(framework => {
         return {
           title: framework.display,
@@ -57,7 +60,7 @@ export default async function setOption(): Promise<Options> {
     {
       name: 'useJsx',
       type: () => (isFeatureFlagsUsed ? null : 'toggle'),
-      message: 'language.useJsx.message',
+      message: language.useJsx.message,
       initial: false,
       active: 'on',
       inactive: 'off',
@@ -65,7 +68,7 @@ export default async function setOption(): Promise<Options> {
     {
       name: 'useRouter',
       type: () => (isFeatureFlagsUsed ? null : 'toggle'),
-      message: 'language.useRouter.message',
+      message: language.useRouter.message,
       initial: false,
       active: 'on',
       inactive: 'off',
@@ -73,7 +76,7 @@ export default async function setOption(): Promise<Options> {
     {
       name: 'usePinia',
       type: () => (isFeatureFlagsUsed ? null : 'toggle'),
-      message: 'language.usePinia.message',
+      message: language.usePinia.message,
       initial: false,
       active: 'on',
       inactive: 'off',
@@ -81,7 +84,7 @@ export default async function setOption(): Promise<Options> {
     {
       name: 'useEslint',
       type: () => (isFeatureFlagsUsed ? null : 'toggle'),
-      message: 'language.useEslint.message',
+      message: language.useEslint.message,
       initial: false,
       active: 'on',
       inactive: 'off',
@@ -94,7 +97,7 @@ export default async function setOption(): Promise<Options> {
         }
         return 'toggle';
       },
-      message: 'language.usePrettier.message',
+      message: language.usePrettier.message,
       initial: false,
       active: 'on',
       inactive: 'off',
@@ -102,7 +105,7 @@ export default async function setOption(): Promise<Options> {
     {
       name: 'useHusky',
       type: () => (isFeatureFlagsUsed ? null : 'toggle'),
-      message: 'language.useHusky.message',
+      message: language.useHusky.message,
       initial: false,
       active: 'on',
       inactive: 'off',
@@ -110,7 +113,7 @@ export default async function setOption(): Promise<Options> {
     {
       name: 'plugins',
       type: 'multiselect',
-      message: 'Custom plugins',
+      message: language.customPlugins.message,
       choices: PLUGIN_DEPENDENCE.map(item => {
         return {
           title: item.label,

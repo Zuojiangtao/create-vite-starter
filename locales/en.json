@@ -1,0 +1,54 @@
+{
+  "projectName": {
+    "message": "Project name:"
+  },
+  "shouldOverwrite": {
+    "dirForPrompts": {
+      "current": "Current directory",
+      "target": "Target directory"
+    },
+    "message": "is not empty. Remove existing files and continue?"
+  },
+  "framework": {
+    "message": "Select a framework:"
+  },
+  "packageName": {
+    "message": "Package name:",
+    "invalidMessage": "Invalid package.json name"
+  },
+  "useTypeScript": {
+    "message": "Add TypeScript?"
+  },
+  "useJsx": {
+    "message": "Add JSX Support?"
+  },
+  "useRouter": {
+    "message": "Add Vue Router for Single Page Application development?"
+  },
+  "usePinia": {
+    "message": "Add Pinia for state management?"
+  },
+  "useEslint": {
+    "message": "Add ESLint for code quality?"
+  },
+  "usePrettier": {
+    "message": "Add Prettier for code formatting?"
+  },
+  "useHusky": {
+    "message": "Add Husky for git hooks？"
+  },
+  "customPlugins": {
+    "message": "Select custom plugins:"
+  },
+  "errors": {
+    "operationCancelled": "Operation cancelled"
+  },
+  "defaultToggleOptions": {
+    "active": "Yes",
+    "inactive": "No"
+  },
+  "infos": {
+    "scaffolding": "Scaffolding project in",
+    "done": "Done. Now run:"
+  }
+}

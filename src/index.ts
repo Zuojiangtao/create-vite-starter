@@ -7,10 +7,9 @@ import create from './core/create';
 async function initViteStarterCommand() {
   // start
   const lang = await start();
-  console.log(lang);
 
   // setting
-  const options = await setting();
+  const options = await setting(lang);
 
   // create
   await create(options);

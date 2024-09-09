@@ -1,17 +1,7 @@
 import prompts from 'prompts';
+import { LANGUAGE } from '@/config/compile.config';
 
-const LANGUAGE = [
-  {
-    label: 'EN',
-    value: 'en',
-  },
-  {
-    label: '中文',
-    value: 'zh-cn',
-  },
-];
-
-export default async function start() {
+export default async function start(): Promise<prompts.Answers<any>> {
   console.log();
   console.log('A vite-based front-end startup template generator.');
   console.log();
