@@ -6,7 +6,7 @@ import { getLanguage } from '@/utils/getLanguage';
 
 const isFeatureFlagsUsed = false;
 
-export default async function setOption(lang: prompts.Answers<any>): Promise<Options> {
+export default async function setOption(lang: object): Promise<Options> {
   const language = getLanguage(lang.language);
 
   const result = await prompts([
