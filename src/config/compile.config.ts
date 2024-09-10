@@ -27,10 +27,14 @@ export const FRAMEWORKS: object[] = [
     name: 'react',
     display: 'React',
   },
-  {
-    name: 'preact',
-    display: 'Preact',
-  },
+  // {
+  //   name: 'nuxt',
+  //   display: 'Nuxt',
+  // },
+  // {
+  //   name: 'next',
+  //   display: 'Next',
+  // },
 ];
 
 // plugin
