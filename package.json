@@ -20,10 +20,11 @@
     "locales"
   ],
   "bin": {
-    "create-vite-starter": "./dist/index.js"
+    "create-vite-starter": "./dist/index.js",
+    "vite-start": "./dist/index.js"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": "^14.18.0 || ^16.0.0 || >=18.0.0"
   },
   "packageManager": "pnpm@9.7.0",
   "scripts": {
