@@ -55,12 +55,17 @@ export default async function create(options: Options) {
   // ========= vite =========
   await copyTemplate(path.resolve(__dirname, '../template/vite'), filePath);
   // ========= framework =========
-  // todo: 完整框架模板逻辑补充 - react\nuxt\next\koa
+  // todo: 完整框架模板逻辑补充 - nuxt\next\koa
   await copyTemplate(path.resolve(__dirname, `../template/${framework}`), filePath);
 
   // ================= ejs render =================
   // ========= base =========
   await ejsRender(path.resolve(__dirname, '../template/base'), filePath, options);
+  // ========= config =========
+  // eslint
+  if (needsEslint) {
+    await ejsRender(path.resolve(__dirname, '../template/config/eslint'), filePath, options);
+  }
   // ========= vite =========
   await ejsRender(path.resolve(__dirname, '../template/vite'), filePath, options);
   // ========= framework =========

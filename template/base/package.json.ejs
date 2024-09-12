@@ -30,20 +30,30 @@
   },
   <% } -%>
   "dependencies": {
+    <% if (options.framework === 'Vue') { -%>
     "@ant-design/icons-vue": "^7.0.1",
-    <% if (options.usePluginVueUseCore) { -%>
+    <% } -%>
+    <% if (options.framework === 'Vue' && options.usePluginVueUseCore) { -%>
     "@vueuse/core": "^10.9.0",
     <% } -%>
+    <% if (options.framework === 'Vue') { -%>
     "ant-design-vue": "4.1.2",
+    <% } -%>
     "axios": "^1.6.8",
-    <% if (options.usePinia) { -%>
+    <% if (options.framework === 'Vue' && options.usePinia) { -%>
     "pinia": "^2.1.7",
     <% } -%>
+    <% if (options.framework === 'React') { -%>
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+    <% } -%>
+    <% if (options.framework === 'Vue') { -%>
     "vue": "3.4.21",
-    <% if (options.usePluginExternalCDN) { -%>
+    <% } -%>
+    <% if (options.framework === 'Vue' && options.usePluginExternalCDN) { -%>
     "vue-demi": "^0.14.7",
     <% } -%>
-    <% if (options.useRouter) { -%>
+    <% if (options.framework === 'Vue' && options.useRouter) { -%>
     "vue-router": "4.3.0"
     <% } -%>
   },
@@ -54,16 +64,26 @@
     <% if (options.useHusky) { -%>
     "@commitlint/config-conventional": "^19.1.0",
     <% } -%>
-    <% if (options.useEslint) { -%>
+    <% if (options.framework === 'Vue' && options.useEslint) { -%>
     "@rushstack/eslint-patch": "^1.8.0",
     <% } -%>
     "@types/node": "^20.11.30",
+    <% if (options.framework === 'React') { -%>
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    <% } -%>
+    <% if (options.framework === 'Vue') { -%>
     "@vitejs/plugin-vue": "^4.6.2",
-    <% if (options.useJsx) { -%>
+    <% } -%>
+    <% if (options.framework === 'Vue' && options.useJsx) { -%>
     "@vitejs/plugin-vue-jsx": "^3.1.0",
     <% } -%>
+    <% if (options.framework === 'Vue' && options.useEslint && options.usePrettier) { -%>
     "@vue/eslint-config-prettier": "^9.0.0",
+    <% } -%>
+    <% if (options.framework === 'Vue' && options.useEslint) { -%>
     "@vue/eslint-config-typescript": "^13.0.0",
+    <% } -%>
     "@vue/tsconfig": "^0.5.1",
     <% if (options.usePluginVisualizer) { -%>
     "cross-env": "^7.0.3",
@@ -71,7 +91,15 @@
     <% if (options.useEslint) { -%>
     "eslint": "^8.57.0",
     <% } -%>
-    <% if (options.useEslint && options.framework === 'vue') { -%>
+    <% if (options.useEslint && options.usePrettier) { -%>
+    "eslint-plugin-prettier": "^5.2.1",
+    <% } -%>
+    <% if (options.useEslint && options.framework === 'React') { -%>
+    "eslint-plugin-react": "^7.35.2",
+    "eslint-plugin-react-hooks": "^5.1.0-rc.0",
+    "eslint-plugin-react-refresh": "^0.4.9",
+    <% } -%>
+    <% if (options.useEslint && options.framework === 'Vue') { -%>
     "eslint-plugin-vue": "^9.23.0",
     <% } -%>
     <% if (options.useHusky) { -%>
@@ -82,7 +110,7 @@
     "lint-staged": "^15.2.0",
     <% } -%>
     "npm-run-all": "^4.1.5",
-    <% if (options.usePrettier) { -%>
+    <% if (options.useEslint && options.usePrettier) { -%>
     "prettier": "^3.2.5",
     <% } -%>
     "rimraf": "^5.0.5",
@@ -116,6 +144,8 @@
     <% if (options.usePluginSvgLoader) { -%>
     "vite-svg-loader": "^5.1.0",
     <% } -%>
+    <% if (options.framework === 'Vue') { -%>
     "vue-tsc": "^2.0.7"
+    <% } -%>
   }
 }

@@ -59,7 +59,12 @@ export default async function setOption(lang: object): Promise<Options> {
     // },
     {
       name: 'useJsx',
-      type: () => (isFeatureFlagsUsed ? null : 'toggle'),
+      type: (prev, values) => {
+        if (isFeatureFlagsUsed || values.framework === 'React') {
+          return null;
+        }
+        return 'toggle';
+      },
       message: language.useJsx.message,
       initial: false,
       active: 'on',
@@ -67,7 +72,12 @@ export default async function setOption(lang: object): Promise<Options> {
     },
     {
       name: 'useRouter',
-      type: () => (isFeatureFlagsUsed ? null : 'toggle'),
+      type: (prev, values) => {
+        if (isFeatureFlagsUsed || values.framework === 'React') {
+          return null;
+        }
+        return 'toggle';
+      },
       message: language.useRouter.message,
       initial: false,
       active: 'on',
@@ -75,7 +85,12 @@ export default async function setOption(lang: object): Promise<Options> {
     },
     {
       name: 'usePinia',
-      type: () => (isFeatureFlagsUsed ? null : 'toggle'),
+      type: (prev, values) => {
+        if (isFeatureFlagsUsed || values.framework === 'React') {
+          return null;
+        }
+        return 'toggle';
+      },
       message: language.usePinia.message,
       initial: false,
       active: 'on',
