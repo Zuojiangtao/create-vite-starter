@@ -1,8 +1,10 @@
 import path from 'node:path';
 import fs from 'node:fs';
+import chalk from 'chalk';
 import { copyTemplate } from '@/utils/copyTemplate';
 import { ejsRender } from '@/utils/ejsRender';
 import { DEFAULT_PROJECT_NAME } from '@/config/compile.config';
+import { getLanguage } from '@/utils/getLanguage';
 
 function recursiveDeleteFolder(filePath) {
   for (const fileName of fs.readdirSync(filePath)) {
@@ -15,8 +17,7 @@ function recursiveDeleteFolder(filePath) {
   }
 }
 
-export default async function create(options: Options) {
-  console.log(options);
+export default async function create(lang: object, options: Options) {
   const {
     projectName,
     overwrite: shouldOverwrite,
@@ -28,6 +29,11 @@ export default async function create(options: Options) {
 
   const name = projectName || DEFAULT_PROJECT_NAME;
   const filePath = path.resolve(process.cwd(), name);
+  const language = getLanguage(lang.language);
+
+  // ================= generate info =================
+  console.log();
+  console.log(chalk.cyan(`${language.infos.scaffolding} ...`));
 
   // ================= overwrite =================
   if (fs.existsSync(filePath) && shouldOverwrite) {

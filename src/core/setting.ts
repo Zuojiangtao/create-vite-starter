@@ -1,7 +1,7 @@
 import path from 'node:path';
 import fs from 'node:fs';
 import prompts from 'prompts';
-import { DEFAULT_PROJECT_NAME, FRAMEWORKS, PLUGIN_DEPENDENCE } from '@/config/compile.config';
+import { DEFAULT_PROJECT_NAME, FRAMEWORKS, PACKAGE_MANAGER, PLUGIN_DEPENDENCE } from '@/config/compile.config';
 import { getLanguage } from '@/utils/getLanguage';
 
 const isFeatureFlagsUsed = false;
@@ -37,6 +37,18 @@ export default async function setOption(lang: object): Promise<Options> {
       name: 'overwrite',
       message: prev => `${language.shouldOverwrite.dirForPrompts.target} "${prev}" ${language.shouldOverwrite.message}`,
       initial: false,
+    },
+    {
+      type: 'select',
+      name: 'packageManager',
+      message: language.packageManager.message,
+      choices: PACKAGE_MANAGER.map(pkgManager => {
+        return {
+          title: pkgManager.label,
+          value: pkgManager.value,
+        };
+      }),
+      initial: 0,
     },
     {
       type: 'select',

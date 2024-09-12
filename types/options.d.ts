@@ -2,6 +2,7 @@ interface Options {
   // base
   projectName?: string
   overwrite?: boolean
+  packageManager?: string
   framework?: string
   useTypeScript?: boolean
   useJsx?: boolean

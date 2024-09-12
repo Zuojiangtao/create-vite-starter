@@ -9,6 +9,9 @@
     },
     "message": "is not empty. Remove existing files and continue?"
   },
+  "packageManager": {
+    "message": "Select your packageManager:"
+  },
   "framework": {
     "message": "Select a framework:"
   },

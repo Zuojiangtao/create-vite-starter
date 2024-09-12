@@ -17,6 +17,22 @@ export const LANGUAGE = [
 // default projectName
 export const DEFAULT_PROJECT_NAME = 'vite-starter';
 
+// packageManager
+export const PACKAGE_MANAGER: object[] = [
+  {
+    label: 'npm',
+    value: 'npm',
+  },
+  {
+    label: 'yarn',
+    value: 'yarn',
+  },
+  {
+    label: 'pnpm',
+    value: 'pnpm',
+  },
+];
+
 // framework
 export const FRAMEWORKS: object[] = [
   {
