@@ -5,7 +5,12 @@ import { createHtmlPlugin } from 'vite-plugin-html';
 export function configPluginHTML(title: string): PluginOption | PluginOption[] {
   return createHtmlPlugin({
     minify: true,
+    <% if (options.framework === 'Vue') { -%>
     entry: 'src/main.ts',
+    <% } -%>
+    <% if (options.framework === 'React') { -%>
+    entry: 'src/main.tsx',
+    <% } -%>
     inject: {
       // Inject data into ejs template
       data: {
