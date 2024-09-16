@@ -1,6 +1,6 @@
 {
-  "name": "create-vite-starter",
-  "version": "0.5.0",
+  "name": "vite-template-starter",
+  "version": "1.0.0",
   "description": "A vite-based front-end startup template generator.",
   "author": "zuojt <zuojt2022@gmail.com> (https://github.com/Zuojiangtao)",
   "license": "ISC",
