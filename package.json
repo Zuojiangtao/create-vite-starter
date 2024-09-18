@@ -20,7 +20,7 @@
     "locales"
   ],
   "bin": {
-    "create-vite-starter": "./dist/index.js",
+    "vite-template-starter": "./dist/index.js",
     "vite-start": "./dist/index.js"
   },
   "engines": {
