@@ -22,9 +22,13 @@ module.exports = {
   <% } -%>
   <% if (options.framework === 'Vue') { -%>
   parserOptions: {
-    parser: 'babel-eslint',
+    parser: '@typescript-eslint/parser',
+    ecmaVersion: 2020,
+    sourceType: 'module',
+    jsxPragma: 'React',
     ecmaFeatures: {
-      legacyDecorators: true,
+      jsx: true,
+      tsx: true,
     },
   },
   <% } -%>
@@ -36,13 +40,13 @@ module.exports = {
     sourceType: 'module',
     jsxPragma: 'React',
     ecmaFeatures: {
-    jsx: true,
+      jsx: true,
       tsx: true,
     },
   },
   <% } -%>
   <% if (options.framework === 'Vue') { -%>
-  extends: ['plugin:vue/strongly-recommended', '@vue/standard', 'plugin:prettier/recommended'],
+  extends: ['plugin:vue/vue3-recommended', 'plugin:@typescript-eslint/recommended', 'plugin:prettier/recommended'],
   <% } -%>
   <% if (options.framework === 'React') { -%>
   extends: ['plugin:react/recommended', 'plugin:@typescript-eslint/recommended', 'plugin:prettier/recommended'],
