@@ -6,17 +6,26 @@ import { getLanguage } from '@/utils/getLanguage';
 
 const isFeatureFlagsUsed = false;
 
-export default async function setOption(lang: object): Promise<Options> {
+/**
+ * 设置项目配置选项
+ * @param lang - 语言配置对象
+ * @returns 返回项目配置选项
+ */
+export default async function setOption(lang: { language: string }): Promise<Options> {
+  // 获取对应语言的文案
   const language = getLanguage(lang.language);
 
+  // 通过prompts获取用户输入的配置
   const result = await prompts([
     {
+      // 项目名称配置
       type: 'text',
       name: 'projectName',
       message: language.projectName.message,
       initial: DEFAULT_PROJECT_NAME,
     },
     {
+      // 是否覆盖已存在目录配置
       type: prev => {
         try {
           const stats = fs.statSync(path.resolve(process.cwd(), prev));
@@ -25,13 +34,17 @@ export default async function setOption(lang: object): Promise<Options> {
           } else {
             return null;
           }
-        } catch (e) {
-          if (e.code === 'ENOENT') {
-            return null;
-          } else {
-            // 处理其他错误
-            console.error(`发生其它错误: ${e.message}`);
+        } catch (err: unknown) {
+          if (err instanceof Error) {
+            if ('code' in err && err.code === 'ENOENT') {
+              return null;
+            } else {
+              // 处理其他错误
+              console.error(`发生其它错误: ${err.message}`);
+              return null;
+            }
           }
+          return null;
         }
       },
       name: 'overwrite',
@@ -39,10 +52,11 @@ export default async function setOption(lang: object): Promise<Options> {
       initial: false,
     },
     {
+      // 包管理器选择配置
       type: 'select',
       name: 'packageManager',
       message: language.packageManager.message,
-      choices: PACKAGE_MANAGER.map(pkgManager => {
+      choices: (PACKAGE_MANAGER as Array<{ label: string; value: string }>).map(pkgManager => {
         return {
           title: pkgManager.label,
           value: pkgManager.value,
@@ -51,10 +65,11 @@ export default async function setOption(lang: object): Promise<Options> {
       initial: 0,
     },
     {
+      // 框架选择配置
       type: 'select',
       name: 'framework',
       message: language.framework.message,
-      choices: FRAMEWORKS.map(framework => {
+      choices: (FRAMEWORKS as Array<{ name: string; display: string }>).map(framework => {
         return {
           title: framework.display,
           value: framework.display,
@@ -70,8 +85,9 @@ export default async function setOption(lang: object): Promise<Options> {
     //   inactive: 'off',
     // },
     {
+      // JSX支持配置
       name: 'useJsx',
-      type: (prev, values) => {
+      type: (_prev, values) => {
         if (isFeatureFlagsUsed || values.framework === 'React') {
           return null;
         }
@@ -83,8 +99,9 @@ export default async function setOption(lang: object): Promise<Options> {
       inactive: 'off',
     },
     {
+      // 路由配置
       name: 'useRouter',
-      type: (prev, values) => {
+      type: (_prev, values) => {
         if (isFeatureFlagsUsed || values.framework === 'React') {
           return null;
         }
@@ -96,8 +113,9 @@ export default async function setOption(lang: object): Promise<Options> {
       inactive: 'off',
     },
     {
+      // Pinia状态管理配置
       name: 'usePinia',
-      type: (prev, values) => {
+      type: (_prev, values) => {
         if (isFeatureFlagsUsed || values.framework === 'React') {
           return null;
         }
@@ -109,6 +127,7 @@ export default async function setOption(lang: object): Promise<Options> {
       inactive: 'off',
     },
     {
+      // ESLint配置
       name: 'useEslint',
       type: () => (isFeatureFlagsUsed ? null : 'toggle'),
       message: language.useEslint.message,
@@ -117,8 +136,9 @@ export default async function setOption(lang: object): Promise<Options> {
       inactive: 'off',
     },
     {
+      // Prettier配置
       name: 'usePrettier',
-      type: (prev, values) => {
+      type: (_prev, values) => {
         if (isFeatureFlagsUsed || !values.useEslint) {
           return null;
         }
@@ -130,6 +150,7 @@ export default async function setOption(lang: object): Promise<Options> {
       inactive: 'off',
     },
     {
+      // Husky配置
       name: 'useHusky',
       type: () => (isFeatureFlagsUsed ? null : 'toggle'),
       message: language.useHusky.message,
@@ -138,10 +159,11 @@ export default async function setOption(lang: object): Promise<Options> {
       inactive: 'off',
     },
     {
+      // 自定义插件配置
       name: 'plugins',
       type: 'multiselect',
       message: language.customPlugins.message,
-      choices: PLUGIN_DEPENDENCE.map(item => {
+      choices: (PLUGIN_DEPENDENCE as Array<{ label: string; value: string }>).map(item => {
         return {
           title: item.label,
           value: item.value,
@@ -151,8 +173,12 @@ export default async function setOption(lang: object): Promise<Options> {
     },
   ]);
 
-  // format options plugins
-  if (result.plugins.length) result.plugins.forEach(plugin => (result[plugin] = true));
+  // 格式化插件配置选项
+  if (result.plugins?.length) {
+    result.plugins.forEach((plugin: string) => {
+      (result as any)[plugin] = true;
+    });
+  }
   delete result.plugins;
 
   return result;

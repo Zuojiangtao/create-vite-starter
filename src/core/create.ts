@@ -6,18 +6,44 @@ import { ejsRender } from '@/utils/ejsRender';
 import { DEFAULT_PROJECT_NAME } from '@/config/compile.config';
 import { getLanguage } from '@/utils/getLanguage';
 
-function recursiveDeleteFolder(filePath) {
-  for (const fileName of fs.readdirSync(filePath)) {
-    const fullPath = path.resolve(filePath, fileName);
-    if (fs.lstatSync(fullPath).isDirectory()) {
-      recursiveDeleteFolder(fullPath);
-      continue;
+/**
+ * 递归删除文件夹及其内容
+ * @param filePath - 要删除的文件夹路径
+ */
+function recursiveDeleteFolder(filePath: string) {
+  try {
+    // 遍历文件夹中的所有文件和子文件夹
+    for (const fileName of fs.readdirSync(filePath)) {
+      // 获取完整路径
+      const fullPath = path.resolve(filePath, fileName);
+      // 如果是文件夹则递归删除
+      if (fs.lstatSync(fullPath).isDirectory()) {
+        recursiveDeleteFolder(fullPath);
+        fs.rmdirSync(fullPath);
+        continue;
+      }
+      // 删除文件
+      fs.unlinkSync(fullPath);
     }
-    fs.unlinkSync(fullPath);
+    // 删除空文件夹
+    fs.rmdirSync(filePath);
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      // 打印错误信息
+      console.error(`删除文件夹时发生错误: ${error.message}`);
+      throw error;
+    }
+    throw new Error('未知错误');
   }
 }
 
-export default async function create(lang: object, options: Options) {
+/**
+ * 创建项目
+ * @param lang - 语言配置对象，包含language字段
+ * @param options - 项目配置选项
+ * @returns Promise<void>
+ */
+export default async function create(lang: { language: string }, options: Options) {
   const {
     projectName,
     overwrite: shouldOverwrite,
