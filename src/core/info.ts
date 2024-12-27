@@ -2,27 +2,19 @@ import chalk from 'chalk';
 import { getLanguage } from '@/utils/getLanguage';
 
 interface Options {
-  projectName: string;
-  packageManager: string;
-}
-
-interface Language {
-  language: string;
-  infos: {
-    done: string;
-  };
+  projectName?: string;
+  packageManager?: string;
 }
 
 /**
- * 显示项目生成完成后的提示信息
- * @param lang - 语言配置对象
- * @param option - 项目配置选项
+ * 打印项目创建完成信息
+ * @param lang - 语言标识
+ * @param options - 项目配置选项
  */
-export default async function showGenerationInfo(lang: Language, option: Options) {
-  // 解构获取项目名称和包管理器
-  const { projectName, packageManager } = option;
-  // 获取对应语言的文案
+export default async function info(lang: { language: string }, options: Options): Promise<void> {
   const language = getLanguage(lang.language);
+  // 解构获取项目名称和包管理器
+  const { projectName = '', packageManager = 'npm' } = options;
 
   // 打印完成提示
   console.log(`\n${chalk.cyan(language.infos.done)}\n`);

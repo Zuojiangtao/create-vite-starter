@@ -1,12 +1,11 @@
 import prompts from 'prompts';
-import { LANGUAGE } from '@/config/compile.config';
 import chalk from 'chalk';
 
 /**
  * 启动CLI并获取用户语言选择
  * @returns 返回用户选择的语言配置
  */
-export default async function start(): Promise<prompts.Answers<any>> {
+export default async function start(): Promise<{ language: string }> {
   // 打印空行
   console.log();
   // 打印CLI工具说明
@@ -18,19 +17,16 @@ export default async function start(): Promise<prompts.Answers<any>> {
   );
   console.log();
 
-  // 返回用户语言选择结果
-  return await prompts([
-    {
-      // 语言选择配置
-      type: 'select',
-      name: 'language',
-      message: 'Select your language:',
-      choices: LANGUAGE.map(framework => {
-        return {
-          title: framework.label,
-          value: framework.value,
-        };
-      }),
-    },
-  ]);
+  const result = await prompts({
+    type: 'select',
+    name: 'language',
+    message: '请选择语言 / Please select a language:',
+    choices: [
+      { title: '简体中文', value: 'zh-cn' },
+      { title: 'English', value: 'en' },
+    ],
+    initial: 0,
+  });
+
+  return { language: result.language };
 }

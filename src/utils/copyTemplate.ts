@@ -29,7 +29,7 @@ export async function copyTemplate(src: string, dest: string, callback: void): P
   if (extName === '.ejs') return;
 
   // ================= json file copy =================
-  const jsonWriteFile = dest => {
+  const jsonWriteFile = (dest: string) => {
     const existing = JSON.parse(fs.readFileSync(dest, 'utf8'));
     const newPackage = JSON.parse(fs.readFileSync(src, 'utf8'));
     return deepMerge(existing, newPackage);
