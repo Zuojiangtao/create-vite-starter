@@ -80,7 +80,9 @@ export async function ejsRender(src: string, dest: string, options: Options): Pr
     }
 
     // 文件写入
-    fs.writeFileSync(outputFilePath, prettierCode);
+    if (prettierCode !== null) {
+      fs.writeFileSync(outputFilePath, prettierCode);
+    }
     // fs.unlinkSync(ejsFilePath);
   } catch (e) {
     console.error(e);
