@@ -58,46 +58,46 @@ export const PLUGIN_DEPENDENCE: object[] = [
   {
     label: '@vueuse/core',
     value: 'usePluginVueUseCore',
-    version: '^10.9.0',
+    featureLimited: ['Vue'],
   },
   {
     label: 'rollup-plugin-visualizer',
     value: 'usePluginVisualizer',
-    version: '^5.12.0',
+    featureLimited: ['Vue', 'React'],
   },
   {
     label: 'unplugin-auto-import',
     value: 'usePluginAutoImport',
-    version: '^0.17.5',
+    featureLimited: ['Vue', 'React'],
   },
   {
     label: 'unplugin-vue-components',
     value: 'usePluginVueComponents',
-    version: '^0.26.0',
+    featureLimited: ['Vue'],
   },
   {
     label: 'vite-plugin-compression',
     value: 'usePluginCompression',
-    version: '^0.5.1',
+    featureLimited: ['Vue', 'React'],
   },
   {
     label: 'vite-plugin-external-cdn',
     value: 'usePluginExternalCDN',
-    version: '^1.0.1',
+    featureLimited: ['Vue', 'React'],
   },
   {
     label: 'vite-plugin-html',
     value: 'usePluginHtml',
-    version: '^3.2.2',
+    featureLimited: ['Vue', 'React'],
   },
   {
     label: 'vite-plugin-image-optimizer',
     value: 'usePluginImageOptimizer',
-    version: '^1.1.8',
+    featureLimited: ['Vue', 'React'],
   },
   {
     label: 'vite-svg-loader',
     value: 'usePluginSvgLoader',
-    version: '^5.1.0',
+    featureLimited: ['Vue', 'React'],
   },
 ];

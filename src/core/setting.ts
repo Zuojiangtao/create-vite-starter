@@ -163,12 +163,18 @@ export default async function setOption(lang: { language: string }): Promise<Opt
       name: 'plugins',
       type: 'multiselect',
       message: language.customPlugins.message,
-      choices: (PLUGIN_DEPENDENCE as Array<{ label: string; value: string }>).map(item => {
-        return {
-          title: item.label,
-          value: item.value,
-        };
-      }),
+      choices: (_prev, values) => {
+        const selectedFramework = values.framework;
+
+        return (PLUGIN_DEPENDENCE as Array<{ label: string; value: string; featureLimited: string[] }>)
+          .filter(item => item.featureLimited.includes(selectedFramework))
+          .map(item => {
+            return {
+              title: item.label,
+              value: item.value,
+            };
+          });
+      },
       instructions: false,
     },
   ]);
