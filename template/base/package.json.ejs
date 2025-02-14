@@ -36,59 +36,60 @@
     "@ant-design/icons-vue": "^7.0.1",
     <% } -%>
     <% if (options.framework === 'Vue' && options.usePluginVueUseCore) { -%>
-    "@vueuse/core": "^10.9.0",
+    "@vueuse/core": "^12.6.0",
     <% } -%>
     <% if (options.framework === 'Vue') { -%>
-    "ant-design-vue": "4.1.2",
+    "ant-design-vue": "4.2.6",
     <% } -%>
-    "axios": "^1.6.8",
+    "axios": "^1.7.9",
     <% if (options.framework === 'Vue' && options.usePinia) { -%>
-    "pinia": "^2.1.7",
+    "pinia": "^3.0.1",
     <% } -%>
     <% if (options.framework === 'React') { -%>
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
     <% } -%>
     <% if (options.framework === 'Vue') { -%>
-    "vue": "3.4.21",
+    "vue": "3.5.13",
     <% } -%>
     <% if (options.framework === 'Vue' && options.usePluginExternalCDN) { -%>
     "vue-demi": "^0.14.7",
     <% } -%>
     <% if (options.framework === 'Vue' && options.useRouter) { -%>
-    "vue-router": "4.3.0"
+    "vue-router": "4.5.0"
     <% } -%>
   },
   "devDependencies": {
     <% if (options.useHusky) { -%>
-    "@commitlint/cli": "^19.2.1",
+    "@commitlint/cli": "^19.7.1",
     <% } -%>
     <% if (options.useHusky) { -%>
-    "@commitlint/config-conventional": "^19.1.0",
+    "@commitlint/config-conventional": "^19.7.1",
     <% } -%>
     <% if (options.framework === 'Vue' && options.useEslint) { -%>
     "@rushstack/eslint-patch": "^1.8.0",
     <% } -%>
-    "@types/node": "^20.11.30",
+    "@types/node": "^22.13.4",
     <% if (options.framework === 'React') { -%>
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
-    "@vitejs/plugin-react": "^4.3.1",
+    "@types/react-router-dom": "^5.3.3",
+    "@vitejs/plugin-react": "^4.3.4",
     <% } -%>
     <% if (options.framework === 'Vue') { -%>
-    "@vitejs/plugin-vue": "^4.6.2",
+    "@vitejs/plugin-vue": "^5.2.1",
     <% } -%>
     <% if (options.framework === 'Vue' && options.useJsx) { -%>
-    "@vitejs/plugin-vue-jsx": "^3.1.0",
+    "@vitejs/plugin-vue-jsx": "^4.1.1",
     <% } -%>
     <% if (options.framework === 'Vue' && options.useEslint && options.usePrettier) { -%>
-    "@vue/eslint-config-prettier": "^9.0.0",
+    "@vue/eslint-config-prettier": "^10.2.0",
     <% } -%>
     <% if (options.framework === 'Vue' && options.useEslint) { -%>
-    "@vue/eslint-config-typescript": "^13.0.0",
+    "@vue/eslint-config-typescript": "^14.4.0",
     <% } -%>
     <% if (options.framework === 'Vue') { -%>
-    "@vue/tsconfig": "^0.5.1",
+    "@vue/tsconfig": "^0.7.0",
     <% } -%>
     <% if (options.usePluginVisualizer) { -%>
     "cross-env": "^7.0.3",
@@ -108,32 +109,32 @@
     "eslint-plugin-vue": "^9.23.0",
     <% } -%>
     <% if (options.useHusky) { -%>
-    "husky": "^9.0.11",
+    "husky": "^9.1.7",
     <% } -%>
-    "less": "^4.2.0",
+    "less": "^4.2.2",
     <% if (options.useHusky) { -%>
-    "lint-staged": "^15.2.0",
+    "lint-staged": "^15.4.3",
     <% } -%>
     "npm-run-all": "^4.1.5",
     <% if (options.useEslint && options.usePrettier) { -%>
-    "prettier": "^3.2.5",
+    "prettier": "^3.5.1",
     <% } -%>
-    "rimraf": "^5.0.5",
+    "rimraf": "^6.0.1",
     <% if (options.usePluginVisualizer) { -%>
-    "rollup-plugin-visualizer": "^5.12.0",
+    "rollup-plugin-visualizer": "^5.14.0",
     <% } -%>
     <% if (options.usePluginSvgLoader) { -%>
-    "sharp": "^0.33.1",
-    "svgo": "^3.2.0",
+    "sharp": "^0.33.5",
+    "svgo": "^3.3.2",
     <% } -%>
-    "typescript": "^5.4.3",
+    "typescript": "^5.7.3",
     <% if (options.usePluginAutoImport) { -%>
-    "unplugin-auto-import": "^0.17.5",
+    "unplugin-auto-import": "^19.0.0",
     <% } -%>
     <% if (options.usePluginVueComponents) { -%>
-    "unplugin-vue-components": "^0.26.0",
+    "unplugin-vue-components": "^28.0.0",
     <% } -%>
-    "vite": "^4.5.2",
+    "vite": "^6.1.0",
     <% if (options.usePluginCompression) { -%>
     "vite-plugin-compression": "^0.5.1",
     <% } -%>
@@ -150,7 +151,7 @@
     "vite-svg-loader": "^5.1.0",
     <% } -%>
     <% if (options.framework === 'Vue') { -%>
-    "vue-tsc": "^2.0.7"
+    "vue-tsc": "^2.2.0"
     <% } -%>
   }
 }
