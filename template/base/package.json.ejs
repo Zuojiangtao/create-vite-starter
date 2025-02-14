@@ -9,7 +9,9 @@
     <% if (options.usePluginVisualizer) { -%>
     "report": "cross-env REPORT=true npm run build",
     <% } -%>
+    <% if (options.framework === 'Vue') { -%>
     "type-check": "vue-tsc --noEmit",
+    <% } -%>
     "clean:cache": "rimraf node_modules/.cache/ && rimraf node_modules/.vite",
     "clean:lib": "rimraf node_modules",
     <% if (options.useEslint) { -%>
