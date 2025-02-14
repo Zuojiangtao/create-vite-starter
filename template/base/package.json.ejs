@@ -87,7 +87,9 @@
     <% if (options.framework === 'Vue' && options.useEslint) { -%>
     "@vue/eslint-config-typescript": "^13.0.0",
     <% } -%>
+    <% if (options.framework === 'Vue') { -%>
     "@vue/tsconfig": "^0.5.1",
+    <% } -%>
     <% if (options.usePluginVisualizer) { -%>
     "cross-env": "^7.0.3",
     <% } -%>
